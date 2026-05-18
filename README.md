@@ -43,10 +43,10 @@ The `engine.py` will strictly validate your output at every step. If you violate
 
 # MAFS5140 Quantitative Finance – Project Repository
 
-**Student Name:** [Your Name]  
-**Student ID:** [Your ID]  
+**Student Name:** Ding Zihang
+**Student ID:** 21127289
 **Course:** MAFS5140 Statistical Methods in Quantitative Finance  
-**Submission Date:** [Current Date]
+**Submission Date:** 2026/5/18
 
 ---
 
