@@ -1,41 +1,41 @@
-# MAFS5140 Project Framework
+```markdown
+# Final Project – Adaptive Multi‑Factor Strategy with Bayesian Signal Weighting, Black‑Litterman & Risk Management
 
-Welcome to the final project for the Quantitative Finance course! This repository contains the event-driven backtesting framework you will use to develop, test, and evaluate your trading strategies. 
+## Overview
 
-## 📂 Project Structure
+This is the **complete, fully integrated** final project strategy. It combines:
 
-The framework is divided into five main Python scripts. **You only need to modify one of them.**
+- **Three trading signals** (momentum, mean‑reversion, volume‑confirmed trend)
+- **Bayesian model averaging** (empirical Bayes) for dynamic signal weighting
+- **Regime‑aware factor models** (2 regimes: low‑vol / high‑vol) trained via rolling PCA and k‑means
+- **Black‑Litterman blending** – combines factor model prior with signal‑based views
+- **Mean‑variance optimisation** (tangency portfolio)
+- **Risk management** – CVaR heuristic + volatility targeting (kernel density estimation)
 
-*   **`strategy.py`**: **(YOUR WORKSPACE)** This is where you will implement your trading logic. It contains the `Strategy` base class.
-*   **`data_feed.py`**: Handles loading the historical market data (from a `.parquet` file) and feeding it to the engine one timestamp at a time.
-*   **`engine.py`**: The core backtest loop. It simulates the passage of time, calls your strategy to get target weights, calculates portfolio returns, and strictly enforces trading rules.
-*   **`evaluator.py`**: Computes standard performance metrics (Cumulative Return, Annualized Return, Volatility, Sharpe Ratio, Max Drawdown) based on your strategy's return history.
-*   **`main.py`**: The execution script. Run this file to test your strategy locally and view your performance report and any error messages.
+All components are **trained offline** on the large training set (500 MB, 180k periods) and run efficiently online.
 
-## 🛠️ How to Build Your Strategy
+---
 
-You will write your code entirely within the `Strategy` class inside `strategy.py`. 
+## Files
 
-### The `step` Function
-The engine will call your `step(self, current_market_data)` function at every timestamp. 
-*   **Input (`current_market_data`)**: A Pandas DataFrame containing the market snapshot of all assets for the current timestamp. 
-   * Index = Tickers
-   * Columns = fields (e.g. `close`, `volume`)
-*   **Output**: You must return a Pandas Series of target portfolio weights. (Index = Tickers, Values = Weights).
+| File | Description |
+|------|-------------|
+| `train_final.py` | Enhanced training script (rolling PCA, regime clustering, signal priors) |
+| `strategy.py` | Main strategy class (loads pre‑trained model, orchestrates inference) |
+| `signals.py` | Momentum, mean‑reversion, volume trend score computation |
+| `bayesian.py` | Bayesian signal weighting (rolling correlation + softmax) |
+| `black_litterman.py` | Black‑Litterman blending formula |
+| `risk.py` | GMV, long‑only projection, CVaR heuristic, volatility targeting (KDE) |
+| `final_model.pkl` | Pre‑trained model (~1.6 MB) |
+| `main.py` | Backtest runner (modified to save results and plots) |
+| `portfolio_returns.csv` | Output: 5‑min portfolio returns |
+| `strategy_performance.png` | Performance plots (cumulative return, rolling Sharpe, drawdown) |
+| `Final_Report.pdf` | Full project report (30% of grade) |
 
-### State Management
-Because the `step` function only receives a snapshot of the *current* market data, you must use the `__init__(self)` method to initialize any variables (like lists or dataframes) if you need to store historical prices/volumes or compute rolling indicators (e.g., moving averages).
+---
 
-### ⚠️ Trading Rules & Constraints
-The `engine.py` will strictly validate your output at every step. If you violate these rules, the backtest will instantly fail and throw an error:
-1.  **No Short Selling**: Every individual weight must be $\ge 0\$.
-2.  **No Leverage**: The sum of your weights must be $\le 1.0$. 
-3.  **Cash Handling**: If the sum of your weights is less than 1.0, the engine assumes the remaining portion is held in cash. Cash earns a 0% return.
+## How to Run
 
-## 🚀 How to Run and Test
-
-1. Ensure you have the provided dataset in your project directory.
-2. Open your terminal or command prompt.
-3. Run the main script:
-   ```bash
-   python main.py
+### 1. Install dependencies
+```bash
+pip install pandas numpy scikit-learn scipy matplotlib
