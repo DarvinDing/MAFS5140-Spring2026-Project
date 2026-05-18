@@ -1,0 +1,6 @@
+{
+    "lookback": 40,
+    "z_threshold": 1.5,
+    "top_k": 20,
+    "cash_fraction": 0.2
+}
