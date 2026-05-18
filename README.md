@@ -1,30 +1,22 @@
-```markdown
-# Mini Project 2 – Factor Model with PCA, OLS, Shrinkage & Global Minimum Variance
+# MAFS5140 Quantitative Finance – Project Repository
+
+**Student Name:** Ding Zihang  
+**Student ID:** 21127289  
+**Course:** MAFS5140 Statistical Methods in Quantitative Finance  
+**Submission Date:** 2026/5/18
+
+---
 
 ## Overview
 
-This strategy uses a **multi‑factor model** trained offline on daily returns. The factors are extracted via **Principal Component Analysis (PCA)**. Asset‑specific factor loadings (betas) and alphas are estimated via **OLS regression**. A **Ledoit‑Wolf shrunk covariance matrix** provides a stable estimate of asset return covariances. At each rebalance (daily), the strategy computes current factor returns, then constructs a **global minimum variance (GMV) portfolio** projected to long‑only.
+This repository contains my complete submissions for the three projects of the MAFS5140 course:
 
-**Key statistical methods:**
-- PCA (dimensionality reduction, 15 factors)
-- Time‑series OLS regression (factor loadings per asset)
-- Ledoit‑Wolf covariance shrinkage
-- Global minimum variance optimisation
+- **Mini Project 1** – Momentum strategy with z‑score filter and volatility scaling
+- **Mini Project 2** – Factor model with PCA, OLS, shrinkage, and global minimum variance
+- **Final Project** – Adaptive multi‑factor strategy with Bayesian signal weighting, Black‑Litterman blending, regime detection, CVaR, and volatility targeting
 
----
-
-## Files
-
-| File | Description |
-|------|-------------|
-| `train_mini2.py` | Training script (PCA, OLS, covariance) |
-| `strategy.py` | Main strategy class (loads pre‑trained model) |
-| `mini2_model.pkl` | Pre‑trained model (loadings, betas, alphas, covariance) |
+All strategies respect the trading constraints: **no short selling, no leverage**, and total portfolio weight ≤ 1. The code runs within the **10‑minute** computational limit.
 
 ---
 
-## How to Run
-
-### 1. Install dependencies
-```bash
-pip install pandas numpy scikit-learn
+## Repository Structure
